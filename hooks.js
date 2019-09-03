@@ -21,7 +21,13 @@ exports.events = function (req,res){
           console.log("requestUriContext:"+req.body.data.events[i].debugContext.debugData.requestUri)
           if(req.body.data.events[i].debugContext.debugData.requestUri.endsWith(process.env.IDPId)){
             console.log("MFA bypass provider found")
-            //do group membership
+            var userid = req.body.data.events[i].actor.id
+            axios.put(process.env.TENANT_URL+'/api/v1/groups/'+process.env.bypassGroupId+'/users/'+userid)
+            console.log("User has been added to the bypass group")
+          }
+          else {
+            axios.delete(process.env.TENANT_URL+'/api/v1/groups/'+process.env.bypassGroupId+'/users/'+userid)
+            console.log("User has been removed from the bypass group")
           }
         }
       }
