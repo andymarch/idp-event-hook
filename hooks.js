@@ -12,7 +12,6 @@ exports.verify = function (req,res){
 exports.events = function (req,res){
   var i;
   for(i=0; i<req.body.data.events.length;i++){
-    console.log(req.body.data.events[i])
     try{
       let eventType = req.body.data.events[i].eventType;
       if(eventType === 'user.session.start'){
@@ -20,9 +19,9 @@ exports.events = function (req,res){
         if(req.body.data.events[i].outcome.result === 'SUCCESS'){
           console.log("Was successfull")
           console.log("requestUriContext:"+req.body.data.events[i].debugContext.debugData.requestUri)
+          var userid = req.body.data.events[i].actor.id
           if(req.body.data.events[i].debugContext.debugData.requestUri.endsWith(process.env.IDPId)){
             console.log("MFA bypass provider found")
-            var userid = req.body.data.events[i].actor.id
             axios.put(process.env.TENANT_URL+'/api/v1/groups/'+process.env.bypassGroupId+'/users/'+userid)
             console.log("User has been added to the bypass group")
           }
