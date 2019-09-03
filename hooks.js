@@ -10,6 +10,7 @@ exports.verify = function (req,res){
 exports.events = function (req,res){
   var i;
   for(i=0; i<req.body.data.events.length;i++){
+    console.log(req.body.data.events[i])
     try{
     let eventType = req.body.data.events[i].eventType;
       if(req.body.data.events[i].target.length == 1){
@@ -20,8 +21,7 @@ exports.events = function (req,res){
         console.log(eventType + " was triggered for user '" +
                     req.body.data.events[i].target[0].displayName + 
                    "' on '" + req.body.data.events[i].target[1].displayName + "'")
-      }
-        
+      }        
     }
     catch(err){
       console.log("Received invalid data")
