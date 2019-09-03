@@ -1,4 +1,5 @@
 'use strict';
+let responsePayload = {}
 
 exports.verify = function (req,res){
     console.log("verify action triggered")
@@ -12,16 +13,20 @@ exports.events = function (req,res){
   for(i=0; i<req.body.data.events.length;i++){
     console.log(req.body.data.events[i])
     try{
-    let eventType = req.body.data.events[i].eventType;
-      if(req.body.data.events[i].target.length == 1){
-        console.log(eventType + " was triggered for user '" + 
-                    req.body.data.events[i].target[0].displayName + "'") 
+      let eventType = req.body.data.events[i].eventType;
+      if(eventType === 'user.session.start'){
+        console.log("A session was started")
+        if(req.body.data.events[i].outcome.result === 'SUCCESS'){
+          console.log("Was successfull")
+          console.log("authContext:"+req.body.data.events[i].authenticationContext)
+        }
+        else{
+          console.log("was unsuccessfull")
+        }
       }
       else{
-        console.log(eventType + " was triggered for user '" +
-                    req.body.data.events[i].target[0].displayName + 
-                   "' on '" + req.body.data.events[i].target[1].displayName + "'")
-      }        
+        console.log("Unhandled event encountered "+eventType)
+      }       
     }
     catch(err){
       console.log("Received invalid data")
