@@ -7,7 +7,7 @@ exports.verify = function (req,res){
   res.send(jsonToken)
 }
 
-exports.signin = function (req,res){
+exports.events = function (req,res){
   var i;
   for(i=0; i<req.body.data.events.length;i++){
     try{

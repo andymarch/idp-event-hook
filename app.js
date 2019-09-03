@@ -6,7 +6,7 @@ var router = express.Router();
 const app = express()
 app.use(bodyParser.json())
 
-app.route('/registration').post(hooks.registration)
+app.route('/events').post(hooks.events)
 app.route('/*').get(hooks.verify)
 
 app.use(function(req,res){
