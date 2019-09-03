@@ -18,10 +18,11 @@ exports.events = function (req,res){
         console.log("A session was started")
         if(req.body.data.events[i].outcome.result === 'SUCCESS'){
           console.log("Was successfull")
-          console.log("authContext:"+req.body.data.events[i].authenticationContext)
-        }
-        else{
-          console.log("was unsuccessfull")
+          console.log("requestUriContext:"+req.body.data.events[i].debugContext.debugData.requestUri)
+          if(req.body.data.events[i].debugContext.debugData.requestUri.endsWith(process.env.IDPId)){
+            console.log("MFA bypass provider found")
+            //do group membership
+          }
         }
       }
       else{
